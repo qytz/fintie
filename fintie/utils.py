@@ -15,6 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from datetime import timedelta
+from dateutil.parser import parse
 
 
 def convert_number(num_str, cls=int):
@@ -22,7 +23,25 @@ def convert_number(num_str, cls=int):
     return cls(num_str.replace(',', ''))
 
 
-def daterange(start_date, end_date):
+def iter_date(start_date, end_date):
     """按天变动的日期 Generator"""
     for day in range(int((end_date - start_date).days)):
         yield start_date + timedelta(day)
+
+
+def parse_date(date_str):
+    """解析字符串为 Date 类型，失败报 TypeError"""
+    try:
+        dtime = parse(date_str)
+    except ValueError:
+        raise TypeError('Invalid date string')
+    return dtime.date()
+
+
+def parse_datetime(date_str):
+    """解析字符串为 datetime 类型，失败报 TypeError"""
+    try:
+        dtime = parse(date_str)
+    except ValueError:
+        raise TypeError('Invalid date string')
+    return dtime

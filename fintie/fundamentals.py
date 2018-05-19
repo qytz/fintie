@@ -25,24 +25,31 @@
 
 """
 import io
+import os
 import csv
 import json
 import logging
 import zipfile
 import asyncio
-import aiohttp
 from datetime import datetime
 
+import aiohttp
 from plumbum import cli
-from .cli import FinTie
+
+from .cli import FinApp, FinTie
 from .web import WebClient
 
 
 logger = logging.getLogger(__file__)
 
 
-class FundamentalCrawler(WebClient):
+@FinTie.subcommand('fundamental')
+class FundamentalApp(FinApp, WebClient):
     """财务报表抓取类"""
+
+    _start = 2010
+    _end = datetime.now().year
+
     async def get_fundamental_qq(self, code, start_year, end_year):
         """从腾讯财经抓取财务报表"""
         pass
@@ -57,7 +64,7 @@ class FundamentalCrawler(WebClient):
             'fzb': 资产表
             'llb': 现金表
         """
-        logger.debug('geting fundamental from cninfo')
+        logger.info('geting fundamental from cninfo')
         url = 'http://www.cninfo.com.cn/cninfo-new/data/query'
         async with self._session.post(url,
                                       headers=self.dfl_headers,
@@ -68,13 +75,13 @@ class FundamentalCrawler(WebClient):
                                           }) as resp:
             comps = await resp.json()
             if not comps:
-                logger.warning('get company info failed')
+                logger.error('get company info failed')
                 return None
 
             comp = comps[0]
             min_year = int(comp['startTime'])
             if start_year < min_year:
-                logger.warning('set start year from %s to %s', start_year, min_year)
+                logger.error('set start year from %s to %s', start_year, min_year)
                 start_year = min_year
 
         query_url = 'http://www.cninfo.com.cn/cninfo-new/data/download'
@@ -99,23 +106,29 @@ class FundamentalCrawler(WebClient):
             }
         for fund_type in fund_info:
             query_data['type'] = fund_type
+            logger.info('Getting %s table', fund_type)
             async with self._session.post(query_url,
                                           headers=self.dfl_headers,
                                           data=query_data) as resp:
                 data = await resp.read()
 
-            with zipfile.ZipFile(io.BytesIO(data)) as zf:
-                for finfo in zf.filelist:
-                    csv_data = zf.read(finfo.filename)
-                    csv_data = csv_data.decode('gbk')
-                    dialect = csv.Sniffer().sniff(csv_data)
-                    first = True
-                    for info in csv.reader(csv_data.splitlines(), dialect):
-                        if fund_info[fund_type] and first:  # 只需要一个表头
-                            first = False
-                            continue
-                        fund_info[fund_type].append(info)
-        return fund_info
+            data_file = os.path.join(self._data_dir,
+                                     f'{code}.{start_year}-{end_year}.{fund_type}.cninfo.zip')
+            with open(data_file, 'wb') as dataf:
+                dataf.write(data)
+            logger.info('fundamental data for %s has been saved to: %s', fund_type, data_file)
+            # with zipfile.ZipFile(io.BytesIO(data)) as zf:
+            #     for finfo in zf.filelist:
+            #         csv_data = zf.read(finfo.filename)
+            #         csv_data = csv_data.decode('gbk')
+            #         dialect = csv.Sniffer().sniff(csv_data)
+            #         first = True
+            #         for info in csv.reader(csv_data.splitlines(), dialect):
+            #             if fund_info[fund_type] and first:  # 只需要一个表头
+            #                 first = False
+            #                 continue
+            #             fund_info[fund_type].append(info)
+        return True
 
     async def get_fundamental(self, code, start_year, end_year, sources=None):
         source_maps = {
@@ -141,17 +154,12 @@ class FundamentalCrawler(WebClient):
         logger.warning('get data from all sources failed')
         return None
 
-
-@FinTie.subcommand('fundamental')
-class FundamentalCmd(cli.Application):
-    _start = 2017
-    _end = datetime.now().year
-
     def main(self, *args):
-        self.fundamental_crawler = FundamentalCrawler()
+        self._data_dir = os.path.join(self._root_dir, 'fundamentals')
+        os.makedirs(self._data_dir, exist_ok=True)
+
         loop = asyncio.get_event_loop()
-        fund = loop.run_until_complete(self.fundamental_crawler.get_fundamental(self._code, self._start, self._end))
-        print(json.dumps(fund, indent=4))
+        fund = loop.run_until_complete(self.get_fundamental(self._code, self._start, self._end))
 
     @cli.switch(['-c', '--code'], argtype=str, mandatory=True)
     def set_code(self, code):
@@ -170,4 +178,4 @@ class FundamentalCmd(cli.Application):
 
 
 if __name__ == '__main__':
-    FundamentalCmd()
+    FundamentalApp()

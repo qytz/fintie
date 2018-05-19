@@ -39,29 +39,15 @@ from datetime import datetime
 from openpyxl import load_workbook
 
 from plumbum import cli
-from .cli import FinTie
+from .cli import FinApp, FinTie
 from .web import WebClient
 
 
 logger = logging.getLogger(__file__)
 
 
-class StockInfoProxy(WebClient):
-    def __init__(self):
-        self.tbl_name = 'instruments'
-
-    async def init(self, db, loop=None):
-        if not loop:
-            loop = asyncio.get_event_loop()
-        self.loop = loop
-        self.db = db
-
-        fpath = os.path.realpath(__file__)
-        sql_file = os.path.join(fpath, 'sqls', 'create_mkt_calendar.py')
-        with open(sql_file) as f:
-            sql_text = f.read()
-        await self.db.execute(sql_text)
-
+@FinTie.subcommand('stockinfo')
+class StockInfoCmd(FinApp, WebClient):
     # --- get_stock_info ---
     async def get_stock_info_cninfo(self, code, session):
         """从巨潮咨询获取股票的基本信息
@@ -406,13 +392,30 @@ class StockInfoProxy(WebClient):
                     delist_stocks[code] = sec['f008d_0007']
         return delist_stocks
 
-
-@FinTie.subcommand('instruments')
-class StockInfoCmd(cli.Application):
     def main(self, *args):
+        self._data_dir = os.path.join(self._root_dir, 'calendar')
+        os.makedirs(self._data_dir, exist_ok=True)
+
+        loop = asyncio.get_event_loop()
+        fund = loop.run_until_complete(self.get_market_calendar(self._start_date, self._end_date))
         await get_stock_info(self, code, session)
         await get_stock_list(self, session)
         await get_stock_delist(self, session)
+
+    @cli.switch(['-l', '--list'])
+    def set_list(self):
+        """获取上市公司列表"""
+        self._list = True
+
+    @cli.switch(['-d', '--delist'])
+    def set_start_date(self):
+        """获取退市公司列表"""
+        self._delist = True
+
+    @cli.switch(['-i', '--info'], conut, list=True, arttype=str)
+    def set_info(self, info):
+        """获取单个上市公司的信息"""
+        self._infos = True
 
 
 if __name__ == '__main__':

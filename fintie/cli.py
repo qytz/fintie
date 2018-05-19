@@ -15,16 +15,45 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """数据模块命令行"""
+import os
 from plumbum import cli
 from .__version__ import __version__
 
 
-class FinTie(cli.Application):
-    """FinTie command"""
+class FinApp(cli.Application):
+    """Base FinTie command"""
     VERSION = __version__
 
-    verbose = cli.Flag(["v", "verbose"], help="If given, I will be very talkative")
-    debug = cli.Flag(["d", "debug"], help="If given, I will give diagnosis infos")
+    _verbose = 0
+    _debug = False
+    _root_dir = os.path.expanduser("~/.local/fintie")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.parent:
+            self._verbose = self.parent._verbose
+            self._debug = self.parent._debug
+            self._root_dir = self.parent._root_dir
+
+    @cli.switch(['-v', '--verbose'], overridable=True, list=True, argtype=None)
+    def set_verbose(self, val):
+        """If given, I will be very talkative"""
+        self._verbose += len(val)
+
+    @cli.switch(['-d', '--debug'], overridable=True)
+    def set_debug(self):
+        """If given, I will give diagnosis infos"""
+        self._debug = True
+
+    @cli.switch(['-r', '--root'], argtype=str, overridable=True)
+    def set_root(self, root):
+        """The root directory to store data, default='~/.local/fintie'"""
+        self._root_dir = os.path.abspath(os.path.expanduser(root))
+        os.makedirs(self._root_dir, exist_ok=True)
+
+
+class FinTie(FinApp):
+    """FinTie command"""
     def main(self, *args):
         if args:
             print("Unknown command {0!r}".format(args[0]))
