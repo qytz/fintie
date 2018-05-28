@@ -2,17 +2,23 @@
 # -*- coding: utf-8 -*-
 import os
 from setuptools import setup
-from pip.req import parse_requirements
+# from pip.req import parse_requirements
 
 with open('README.rst', 'r', encoding='utf-8') as readme_file:
     readme = readme_file.read()
 
-requirements = [str(ir.req) for ir in parse_requirements(
-    "requirements.txt", session=False)]
+def parse_requirements(filename):
+    """ load requirements from a pip requirements file """
+    lineiter = (line.strip() for line in open(filename))
+    return [line for line in lineiter if line and not line.startswith("#")]
+
+
+requirements = [str(ir.req) for ir in parse_requirements("requirements.txt")]
+
 
 about = {}
 here = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(here, 'csdaily', '__version__.py'), 'r', encoding='utf-8') as f:
+with open(os.path.join(here, 'fintie', '__version__.py'), 'r', encoding='utf-8') as f:
     exec(f.read(), about)
 
 with open('README.rst', 'r', encoding='utf-8') as f:
@@ -28,8 +34,8 @@ setup(
     author=about['__author__'],
     author_email=about['__author_email__'],
     url=about['__url__'],
-    packages=['csdaily'],
-    package_dir={'csdaily': 'csdaily'},
+    packages=['fintie'],
+    package_dir={'fintie': 'fintie'},
     package_data={'': ['LICENSE']},
     include_package_data=True,
     install_requires=requirements,
@@ -38,7 +44,7 @@ setup(
     zip_safe=False,
     entry_points={
         'console_scripts': [
-            'csdaily = csdaily.__main__:main'
+            'fintie= fintie.__main__:main'
         ]
     },
     classifiers=[

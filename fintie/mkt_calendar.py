@@ -93,7 +93,7 @@ class CalendarApp(FinApp, WebClient):
         os.makedirs(self._data_dir, exist_ok=True)
 
         loop = asyncio.get_event_loop()
-        fund = loop.run_until_complete(self.get_market_calendar(self._start_date, self._end_date))
+        loop.run_until_complete(self.get_market_calendar(self._start_date, self._end_date))
 
     @cli.switch(['-s', '--start'], argtype=parse_date)
     def set_start_date(self, date):
