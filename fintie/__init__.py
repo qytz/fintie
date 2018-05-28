@@ -23,4 +23,4 @@
 from .cli import FinTie
 from .fundamentals import FundamentalApp
 from .mkt_calendar import CalendarApp
-from .instruments import StockInfoCmd
+from .instruments import InstrumentListCmd

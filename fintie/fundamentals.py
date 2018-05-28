@@ -164,7 +164,7 @@ class FundamentalApp(FinApp, WebClient):
     @cli.switch(['-c', '--code'], argtype=str, mandatory=True)
     def set_code(self, code):
         """instrument code"""
-        self._code = code
+        self._code = code.split('.')[0]
 
     @cli.switch(['-s', '--start'], argtype=int)
     def set_start(self, start):

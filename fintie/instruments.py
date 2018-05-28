@@ -49,7 +49,7 @@ logger = logging.getLogger(__file__)
 
 
 @FinTie.subcommand('instrument_list')
-class StockInfoCmd(FinApp, WebClient):
+class InstrumentListCmd(FinApp, WebClient):
     """获取上市/退市代码列表"""
     # --- get_stock_info ---
     _list = True
@@ -273,4 +273,4 @@ class StockInfoCmd(FinApp, WebClient):
 
 
 if __name__ == '__main__':
-    StockInfoCmd()
+    InstrumentListCmd()

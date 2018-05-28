@@ -46,7 +46,7 @@ from .web import WebClient
 logger = logging.getLogger(__file__)
 
 
-@FinTie.subcommand('instrument_list')
+@FinTie.subcommand('instrument_info')
 class StockInfoCmd(FinApp, WebClient):
     # --- get_stock_info ---
     _list = True
@@ -233,178 +233,12 @@ class StockInfoCmd(FinApp, WebClient):
         return ret
     # --- get_stock_info ---
 
-    # --- get_stock_list ---
-    async def get_stock_list_cninfo(self, session):
-        """从cninfo获取股票列表数据
-
-        * 巨潮咨询网：http://www.cninfo.com.cn/cninfo-new/information/companylist
-        """
-        url = 'http://www.cninfo.com.cn/cninfo-new/information/companylist'
-        try:
-            async with session.get(url, headers=self.dfl_headers) as \
-                    resp:
-                data = await resp.text()
-        except aiohttp.ServerTimeoutError:
-            logger.info('连接({})超时'.format(url))
-            return None
-        except asyncio.TimeoutError:
-            logger.info('读取({})超时'.format(url))
-            return None
-        tree = html.fromstring(data)
-        szmb_list = tree.xpath("//div[@id='con-a-1']/ul/li/a")
-        szsme_list = tree.xpath("//div[@id='con-a-2']/ul/li/a")
-        szcn_list = tree.xpath("//div[@id='con-a-3']/ul/li/a")
-        shmb_list = tree.xpath("//div[@id='con-a-4']/ul/li/a")
-
-        def _get_codes(l, code_prefix):
-            ret = {}
-            for li in l:
-                # url = li.get('href')
-                code, name = li.text.split(maxsplit=1)
-                ret[code_prefix + code] = {
-                    'code': code_prefix + code,
-                    'name': name,
-                }
-            return ret
-
-        sz_stocks = _get_codes(szmb_list, 'sz')
-        sz_stocks.update(_get_codes(szsme_list, 'sz'))
-        sz_stocks.update(_get_codes(szcn_list, 'sz'))
-        return {
-            'sz': sz_stocks,
-            'sh': _get_codes(shmb_list, 'sh'),
-        }
-
-    async def get_stock_list_se(self, session):
-        """从交易所官方网站获取股票列表
-
-        * 上交所：http://www.sse.com.cn/assortment/stock/list/share/
-        * 深交所官网：http://www.szse.cn/main/marketdata/jypz/colist/
-        """
-
-        sh_info = {}
-        sz_info = {}
-        # stockType=1: A股 stockType=2: B股
-        for stock_type in [1, 2]:
-            url = ('http://query.sse.com.cn/security/stock/'
-                   'downloadStockListFile.do?csrcCode=&stockCode=&'
-                   'areaName=&stockType={}').format(stock_type)
-            referer = 'http://www.sse.com.cn/assortment/stock/list/share/'
-            headers = self.dfl_headers.copy()
-            headers['Referer'] = referer
-            try:
-                async with session.get(url, headers=headers) as resp:
-                    data = await resp.text()
-            except aiohttp.ServerTimeoutError:
-                logger.info('连接({})超时'.format(url))
-                return None
-            except asyncio.TimeoutError:
-                logger.info('读取({})超时'.format(url))
-                return None
-            except:
-                return None
-            dialect = csv.Sniffer().sniff(data)
-            for info in csv.reader(data.splitlines(), dialect):
-                if len(info) < 7 or info[0].strip() == '公司代码':
-                    continue
-                code = 'sh' + info[2].strip()
-                sh_info[code] = {
-                    'code': code,
-                    'name': info[3].strip(),
-                    # 'company_name': info[1].strip(),
-                    # 'list_date': datetime.strptime(info[4].strip(),
-                    #                                '%Y-%m-%d'),
-                }
-
-        # TABKEY=tab1 所有列表
-        # TABKEY=tab2 A股列表
-        # TABKEY=tab3 B股列表
-        url = ('http://www.szse.cn/szseWeb/ShowReport.szse?SHOWTYPE=xlsx&'
-               'CATALOGID=1110&tab2PAGENO=1&ENCODE=1&TABKEY=tab1')
-        try:
-            async with session.get(url, headers=headers) as resp:
-                data = await resp.read()
-        except aiohttp.ServerTimeoutError:
-            logger.info('连接({})超时'.format(url))
-            return None
-        except asyncio.TimeoutError:
-            logger.info('读取({})超时'.format(url))
-            return None
-        wb = load_workbook(io.BytesIO(data))
-        ws = wb.get_active_sheet()
-        for val in ws.values:
-            if val[0].strip() == '公司代码':
-                continue
-            if val[5].strip():
-                code = 'sz' + val[5].strip()
-                sz_info[code] = {
-                    'code': code,
-                    'name': val[6].strip(),
-                    # 'website': val[-1].strip(),
-                    # 'company_name': val[1].strip(),
-                    # 'list_date': datetime.strptime(info[7].strip(),
-                    #                                '%Y-%m-%d'),
-                }
-            if val[10].strip():
-                code = 'sz' + val[10].strip()
-                sz_info[code] = {
-                    'code': code,
-                    'name': val[11].strip(),
-                    # 'website': val[-1].strip(),
-                    # 'company_name': val[1].strip(),
-                    # 'list_date': datetime.strptime(info[12].strip(),
-                    #                                '%Y-%m-%d'),
-                }
-        return {
-            'sz': sz_info,
-            'sh': sh_info,
-        }
-
-    async def get_stock_list(self, session):
-        """获取上市公司列表"""
-        # 默认从cninfo/szse,sse获取上市公司列表，失败则报警
-        ret = await self.get_stock_list_se(session)
-        if ret is not None:
-            return ret
-        ret = await self.get_stock_list_cninfo(session)
-        if ret is not None:
-            return ret
-
-        logger.error('获取/更新股票列表失败')
-        return ret
-    # --- get_stock_list ---
-
-    async def get_stock_delist(self, session):
-        # TODO: 发掘更多的获取退市列表的数据源
-        delist_stocks = {}
-        url = 'http://www.cninfo.com.cn/cninfo-new/information/delistinglist-1'
-        for market in ('sz', 'sh'):
-            try:
-                async with session.get(
-                        url, headers=self.dfl_headers,
-                        params={'market': market}) as resp:
-                    # text = await resp.text()
-                    # print(text)
-                    data = await resp.json()
-            except aiohttp.ServerTimeoutError:
-                logger.info('连接({})超时'.format(url))
-            except asyncio.TimeoutError:
-                logger.info('读取({})超时'.format(url))
-            else:
-                for sec in data:
-                    code = sec['y_seccode_0007'] + '.' + market
-                    delist_stocks[code] = sec['f008d_0007']
-        return delist_stocks
-
     def main(self, *args):
         self._data_dir = os.path.join(self._root_dir, 'calendar')
         os.makedirs(self._data_dir, exist_ok=True)
 
         loop = asyncio.get_event_loop()
         fund = loop.run_until_complete(self.get_market_calendar(self._start_date, self._end_date))
-        await get_stock_info(self, code, session)
-        await get_stock_list(self, session)
-        await get_stock_delist(self, session)
 
     @cli.switch(['-l', '--list'])
     def set_list(self):
