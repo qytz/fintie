@@ -80,21 +80,21 @@ class InstrumentListCmd(FinApp, WebClient):
         szcn_list = tree.xpath("//div[@id='con-a-3']/ul/li/a")
         shmb_list = tree.xpath("//div[@id='con-a-4']/ul/li/a")
 
-        def _get_codes(code_list, code_postfix):
+        def _get_codes(code_list, code_prefix):
             ret = {}
             for code_info in code_list:
                 # url = code_info.get('href')
                 code, name = code_info.text.split(maxsplit=1)
                 ret[code + code_postfix] = {
-                    'code': code + code_postfix,
+                    'code': code_prefix + '.' + code,
                     'name': name,
                 }
             return ret
 
-        sz_stocks = _get_codes(szmb_list, '.sz')
-        sz_stocks.update(_get_codes(szsme_list, '.sz'))
-        sz_stocks.update(_get_codes(szcn_list, '.sz'))
-        sh_stocks = _get_codes(shmb_list, '.sh')
+        sz_stocks = _get_codes(szmb_list, 'sz')
+        sz_stocks.update(_get_codes(szsme_list, 'sz'))
+        sz_stocks.update(_get_codes(szcn_list, 'sz'))
+        sh_stocks = _get_codes(shmb_list, 'sh')
 
         logger.info('Download listed stock list from cninfo complete')
         return {
@@ -136,7 +136,7 @@ class InstrumentListCmd(FinApp, WebClient):
                 if len(info) < 7 or info[0].strip() == '公司代码':
                     logger.debug('skip table header')
                     continue
-                code = info[2].strip() + '.sh'
+                code = 'sh.' + info[2].strip()
                 sh_info[code] = {
                     'code': code,
                     'name': info[3].strip(),
@@ -169,7 +169,7 @@ class InstrumentListCmd(FinApp, WebClient):
                 logger.debug('skip table header')
                 continue
             if val[5].strip():
-                code = val[5].strip() + '.sz'
+                code = 'sz.' + val[5].strip()
                 sz_info[code] = {
                     'code': code,
                     'name': val[6].strip(),
@@ -179,7 +179,7 @@ class InstrumentListCmd(FinApp, WebClient):
                     #                                '%Y-%m-%d'),
                 }
             if val[10].strip():
-                code = val[10].strip() + '.sz'
+                code = 'sz.' + val[10].strip()
                 sz_info[code] = {
                     'code': code,
                     'name': val[11].strip(),
@@ -234,7 +234,7 @@ class InstrumentListCmd(FinApp, WebClient):
                 return delist_stocks
             else:
                 for sec in data:
-                    code = sec['y_seccode_0007'] + '.' + market
+                    code = 'market' + '.' + sec['y_seccode_0007']
                     delist_stocks[code] = sec['f008d_0007']
         logger.info('Download delisted stock list complete')
         return delist_stocks

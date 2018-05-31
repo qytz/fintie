@@ -27,6 +27,7 @@ class FinApp(cli.Application):
     _verbose = 0
     _debug = False
     _root_dir = os.path.expanduser("~/.local/fintie")
+    _data_dir = os.path.join(_root_dir, 'default')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -34,6 +35,8 @@ class FinApp(cli.Application):
             self._verbose = self.parent._verbose
             self._debug = self.parent._debug
             self._root_dir = self.parent._root_dir
+            self._data_dir = os.path.join(self._root_dir, 'default')
+        os.makedirs(self._data_dir, exist_ok=True)
 
     @cli.switch(['-v', '--verbose'], overridable=True, list=True, argtype=None)
     def set_verbose(self, val):

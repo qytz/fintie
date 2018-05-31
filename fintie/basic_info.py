@@ -29,14 +29,13 @@
     * 新浪财经：http://vip.stock.finance.sina.com.cn/corp/go.php/vCI_CorpInfo/stockid/000001.phtml
 """
 import os
-import io
-import csv
+import json
 import asyncio
-import aiohttp
 import logging
-from lxml import html
 from datetime import datetime
-from openpyxl import load_workbook
+
+import aiohttp
+from lxml import html
 
 from plumbum import cli
 from .cli import FinApp, FinTie
@@ -49,25 +48,25 @@ logger = logging.getLogger(__file__)
 @FinTie.subcommand('instrument_info')
 class StockInfoCmd(FinApp, WebClient):
     # --- get_stock_info ---
-    _list = True
-    _delist = True
-    _infos = True
+    _code = ''
 
     async def get_stock_info_cninfo(self, code, session):
         """从巨潮咨询获取股票的基本信息
 
         巨潮咨询网：http://www.cninfo.com.cn/information/companyinfo_n.html?fulltext?szmb000001
         """
+        logger.info('Starting get stock info for %s from cninfo', self._code)
         f_code = ''
-        if code.startswith('sh60') or code.startswith('sh90'):
-            f_code = 'shmb' + code[2:]
-        elif code.startswith('sz300'):
-            f_code = 'szcn' + code[2:]
-        elif code.startswith('sz002'):
-            f_code = 'szsme' + code[2:]
-        elif code.startswith('sz00') or code.startswith('sz200'):
-            f_code = 'szmb' + code[2:]
+        if code.startswith('60') or code.startswith('90'):
+            f_code = 'shmb' + code
+        elif code.startswith('300'):
+            f_code = 'szcn' + code
+        elif code.startswith('002'):
+            f_code = 'szsme' + code
+        elif code.startswith('00') or code.startswith('200'):
+            f_code = 'szmb' + code
         else:
+            logger.info('Get stock info for %s from cninfo failed: invalid code', self._code)
             return None
 
         url = 'http://www.cninfo.com.cn/information/brief/{}.html'.format(
@@ -77,10 +76,10 @@ class StockInfoCmd(FinApp, WebClient):
                     resp:
                 data = await resp.text()
         except aiohttp.ServerTimeoutError:
-            logger.info('连接({})超时'.format(url))
+            logger.warning('connection (%s) timeout', url)
             return None
         except asyncio.TimeoutError:
-            logger.info('读取({})超时'.format(url))
+            logger.warning('read from (%s) timeout', url)
             return None
         tree = html.fromstring(data)
         attrd = {}
@@ -92,11 +91,11 @@ class StockInfoCmd(FinApp, WebClient):
                 attrd[key] = txt.strip()
                 key = None
         info = {}
-        info['list_date'] = datetime.strptime(attrd['上市时间：'], '%Y-%m-%d')
+        # info['list_date'] = datetime.strptime(attrd['上市时间：'], '%Y-%m-%d')
+        info['list_date'] = attrd['上市时间：']
         info['company_name'] = attrd['公司全称：']
         info['website'] = attrd['公司网址：']
         info['reg_addr'] = attrd['注册地址：']
-        info['work_addr'] = attrd['办公地址']
         info['issue_price'] = float(attrd['发行价格（元）：'].replace(',', ''))
         info['reg_cap'] = float(attrd['注册资本(万元)：'].replace(',', '')) * 10000
         info['intro'] = ''
@@ -104,6 +103,7 @@ class StockInfoCmd(FinApp, WebClient):
         info['concept'] = ''
         info['industry'] = ''
         info['found_date'] = None
+        logger.info('Get stock info for %s from cninfo complete', self._code)
 
         return info
 
@@ -112,6 +112,7 @@ class StockInfoCmd(FinApp, WebClient):
 
         新浪财经：http://vip.stock.finance.sina.com.cn/corp/go.php/vCI_CorpInfo/stockid/000001.phtml
         """
+        logger.info('Starting get stock info for %s from sina', self._code)
         def _get_td_text(td):
             txts = []
             for txt in td.xpath('.//text()'):
@@ -121,16 +122,16 @@ class StockInfoCmd(FinApp, WebClient):
             return '||'.join(txts)
 
         url = ('http://vip.stock.finance.sina.com.cn/corp/go.php/'
-               'vCI_CorpInfo/stockid/{}.phtml').format(code[2:])
+               'vCI_CorpInfo/stockid/{}.phtml').format(code)
         try:
             async with session.get(url, headers=self.dfl_headers) as \
                     resp:
                 data = await resp.text()
         except aiohttp.ServerTimeoutError:
-            logger.info('连接({})超时'.format(url))
+            logger.warning('connection (%s) timeout', url)
             return None
         except asyncio.TimeoutError:
-            logger.info('读取({})超时'.format(url))
+            logger.warning('read from (%s) timeout', url)
             return None
         tree = html.fromstring(data)
 
@@ -149,7 +150,8 @@ class StockInfoCmd(FinApp, WebClient):
         else:
             reg_cap = float(reg_cap)
         info = {}
-        info['list_date'] = datetime.strptime(attrd['上市日期：'], '%Y-%m-%d')
+        # info['list_date'] = datetime.strptime(attrd['上市日期：'], '%Y-%m-%d')
+        info['list_date'] = attrd['上市日期：']
         info['company_name'] = attrd['公司名称：']
         info['website'] = attrd['公司网址：']
         info['intro'] = attrd['公司简介：']
@@ -158,103 +160,45 @@ class StockInfoCmd(FinApp, WebClient):
         info['work_addr'] = attrd['办公地址：']
         info['issue_price'] = float(attrd['发行价格：'].replace(',', ''))
         info['reg_cap'] = reg_cap
-        info['found_date'] = datetime.strptime(attrd['成立日期：'], '%Y-%m-%d')
+        # info['found_date'] = datetime.strptime(attrd['成立日期：'], '%Y-%m-%d')
+        info['found_date'] = attrd['成立日期：']
 
         info['concept'] = ''
         info['industry'] = ''
+        logger.info('Get stock info for %s from sina complete', self._code)
 
         return info
 
-    async def get_stock_info_qq(self, code, session):
-        """从腾讯财经获取股票的基本信息
-
-        腾讯财经：http://stock.finance.qq.com/corp1/profile.php?zqdm=000001
-        """
-        url = 'http://stock.finance.qq.com/corp1/profile.php?zqdm={}'.format(
-            code[2:])
-        try:
-            async with session.get(url, headers=self.dfl_headers) as \
-                    resp:
-                data = await resp.text(encoding='gbk')
-        except aiohttp.ServerTimeoutError:
-            logger.info('连接({})超时'.format(url))
-            return None
-        except asyncio.TimeoutError:
-            logger.info('读取({})超时'.format(url))
-            return None
-        tree = html.fromstring(data)
-        items = []
-        for item in tree.xpath('//table[2]/tr/td'):
-            if item.text:
-                items.append(item.text)
-            else:
-                items.append(item.xpath('a//text()'))
-        # 跳过第一个tr -- table head
-        # d = {items[i]: items[i+1] for i in range(1, len(items), 2)}
-        attrd = {}
-        for i in range(1, len(items), 2):
-            if isinstance(items[i], list):
-                key = items[i][0].strip()
-            else:
-                key = items[i].strip()
-            if isinstance(items[i + 1], list):
-                val = '||'.join(items[i + 1])
-            else:
-                val = items[i + 1].strip()
-            attrd[key] = val
-        info = {}
-        info['company_name'] = attrd['法定名称']
-        info['list_date'] = datetime.strptime(attrd['上市日期'], '%Y-%m-%d')
-        info['website'] = attrd['公司网址']
-        info['intro'] = attrd['公司沿革']
-        info['business'] = attrd['经营范围']
-        info['reg_addr'] = attrd['注册地址']
-        info['work_addr'] = attrd['办公地址']
-        info['issue_price'] = float(attrd['发行价格(元)'].replace(',', ''))
-        info['reg_cap'] = float(attrd['注册资本(万元)'].replace(',', '')) * 10000
-        info['concept'] = attrd['所属板块']
-        info['industry'] = attrd['所属行业']
-        info['found_date'] = datetime.strptime(attrd['成立日期'], '%Y-%m-%d')
-
-        return info
-
-    async def get_stock_info(self, code, session):
+    async def get_stock_info(self):
         """获取上市公司基础信息"""
         # 默认从腾讯财经/cninfo/新浪财经获取股票信息，失败则报警
-        ret = await self.get_stock_info_qq(code, session)
-        if ret is not None:
-            return ret
-        ret = await self.get_stock_info_sina(code, session)
-        if ret is not None:
-            return ret
-        ret = await self.get_stock_info_cninfo(code, session)
-        if ret is None:
-            logger.error('获取/更新股票列表失败')
-        return ret
+        logger.info('Starting get stock info for %s', self._code)
+        async with aiohttp.ClientSession(read_timeout=5 * 60, conn_timeout=30) as session:
+            info = await self.get_stock_info_sina(self._code, session)
+            if info is None:
+                info = await self.get_stock_info_cninfo(self._code, session)
+
+        if info is None:
+            logger.error('Get stock %s info failed', self._code)
+
+        date = datetime.now().date()
+        dest_file = os.path.join(self._data_dir, f'{self._code}.{date}.json')
+        with open(dest_file, 'w') as dataf:
+            json.dump(info, dataf, indent=4, ensure_ascii=False)
+        logger.info('Get stock info for %s complete, data saved to %s', self._code, dest_file)
     # --- get_stock_info ---
 
     def main(self, *args):
-        self._data_dir = os.path.join(self._root_dir, 'calendar')
+        self._data_dir = os.path.join(self._root_dir, 'instruments_info')
         os.makedirs(self._data_dir, exist_ok=True)
 
         loop = asyncio.get_event_loop()
-        fund = loop.run_until_complete(self.get_market_calendar(self._start_date, self._end_date))
+        loop.run_until_complete(self.get_stock_info())
 
-    @cli.switch(['-l', '--list'])
-    def set_list(self):
-        """获取上市公司列表"""
-        self._list = True
-
-    @cli.switch(['-d', '--delist'])
-    def set_start_date(self):
-        """获取退市公司列表"""
-        self._delist = True
-
-    @cli.switch(['-i', '--info'], conut, list=True, arttype=str)
-    def set_info(self, info):
-        """获取单个上市公司的信息"""
-        self._infos = True
-
+    @cli.switch(['-c', '--code'], argtype=str, mandatory=True)
+    def set_code(self, code):
+        """instrument code"""
+        self._code = code.split('.')[-1]
 
 if __name__ == '__main__':
     StockInfoCmd()

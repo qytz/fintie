@@ -52,11 +52,11 @@ class FundamentalApp(FinApp, WebClient):
 
     async def get_fundamental_qq(self, code, start_year, end_year):
         """从腾讯财经抓取财务报表"""
-        pass
+        raise NotImplementedError
 
     async def get_fundamental_sina(self, code, start_year, end_year):
         """从新浪财经抓取财务报表"""
-        pass
+        raise NotImplementedError
 
     async def get_fundamental_cninfo(self, code, start_year, end_year):
         """从cninfo获取某只股票的历史财务数据
@@ -164,7 +164,7 @@ class FundamentalApp(FinApp, WebClient):
     @cli.switch(['-c', '--code'], argtype=str, mandatory=True)
     def set_code(self, code):
         """instrument code"""
-        self._code = code.split('.')[0]
+        self._code = code.split('.')[-1]
 
     @cli.switch(['-s', '--start'], argtype=int)
     def set_start(self, start):
