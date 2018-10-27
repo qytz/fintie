@@ -1,0 +1,221 @@
+{
+  "list": [
+    {
+      "keyname": "安徽省",
+      "keycode": "CN340000",
+      "keynameacronym": "ahs",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "北京市",
+      "keycode": "CN110000",
+      "keynameacronym": "bjs",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "福建省",
+      "keycode": "CN350000",
+      "keynameacronym": "fjs",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "广东省",
+      "keycode": "CN440000",
+      "keynameacronym": "gds",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "甘肃省",
+      "keycode": "CN620000",
+      "keynameacronym": "gss",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "广西壮族自治区",
+      "keycode": "CN450000",
+      "keynameacronym": "gxzzzzq",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "贵州省",
+      "keycode": "CN520000",
+      "keynameacronym": "gzs",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "湖北省",
+      "keycode": "CN420000",
+      "keynameacronym": "hbs",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "河北省",
+      "keycode": "CN130000",
+      "keynameacronym": "hbs",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "黑龙江省",
+      "keycode": "CN230000",
+      "keynameacronym": "hljs",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "河南省",
+      "keycode": "CN410000",
+      "keynameacronym": "hns",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "湖南省",
+      "keycode": "CN430000",
+      "keynameacronym": "hns",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "海南省",
+      "keycode": "CN460000",
+      "keynameacronym": "hns",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "吉林省",
+      "keycode": "CN220000",
+      "keynameacronym": "jls",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "江苏省",
+      "keycode": "CN320000",
+      "keynameacronym": "jss",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "江西省",
+      "keycode": "CN360000",
+      "keynameacronym": "jxs",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "辽宁省",
+      "keycode": "CN210000",
+      "keynameacronym": "lns",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "内蒙古自治区",
+      "keycode": "CN150000",
+      "keynameacronym": "nmgzzq",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "宁夏回族自治区",
+      "keycode": "CN640000",
+      "keynameacronym": "nxhzzzq",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "青海省",
+      "keycode": "CN630000",
+      "keynameacronym": "qhs",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "四川省",
+      "keycode": "CN510000",
+      "keynameacronym": "scs",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "山东省",
+      "keycode": "CN370000",
+      "keynameacronym": "sds",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "上海市",
+      "keycode": "CN310000",
+      "keynameacronym": "shs",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "山西省",
+      "keycode": "CN140000",
+      "keynameacronym": "sxs",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "陕西省",
+      "keycode": "CN610000",
+      "keynameacronym": "sxs",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "天津市",
+      "keycode": "CN120000",
+      "keynameacronym": "tjs",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "新疆维吾尔自治区",
+      "keycode": "CN650000",
+      "keynameacronym": "xjwwezzq",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "西藏自治区",
+      "keycode": "CN540000",
+      "keynameacronym": "xzzzq",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "云南省",
+      "keycode": "CN530000",
+      "keynameacronym": "yns",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "浙江省",
+      "keycode": "CN330000",
+      "keynameacronym": "zjs",
+      "boardcode": null,
+      "boardname": null
+    },
+    {
+      "keyname": "重庆市",
+      "keycode": "CN500000",
+      "keynameacronym": "zqs",
+      "boardcode": null,
+      "boardname": null
+    }
+  ]
+}

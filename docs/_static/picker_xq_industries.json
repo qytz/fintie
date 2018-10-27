@@ -1,0 +1,496 @@
+{
+  "list": [
+    {
+      "level2name": "保险业",
+      "level2nameacronym": "bxy",
+      "level2code": "J68",
+      "compcode": null
+    },
+    {
+      "level2name": "仓储业",
+      "level2nameacronym": "ccy",
+      "level2code": "G59",
+      "compcode": null
+    },
+    {
+      "level2name": "畜牧业",
+      "level2nameacronym": "cmy",
+      "level2code": "A03",
+      "compcode": null
+    },
+    {
+      "level2name": "餐饮业",
+      "level2nameacronym": "cyy",
+      "level2code": "H62",
+      "compcode": null
+    },
+    {
+      "level2name": "电力、热力生产和供应业",
+      "level2nameacronym": "dlrlschgyy",
+      "level2code": "D44",
+      "compcode": null
+    },
+    {
+      "level2name": "道路运输业",
+      "level2nameacronym": "dlysy",
+      "level2code": "G54",
+      "compcode": null
+    },
+    {
+      "level2name": "电气机械和器材制造业",
+      "level2nameacronym": "dqjxhqczzy",
+      "level2code": "C38",
+      "compcode": null
+    },
+    {
+      "level2name": "电信、广播电视和卫星传输服务",
+      "level2nameacronym": "dxgbdshwxcsfw",
+      "level2code": "I63",
+      "compcode": null
+    },
+    {
+      "level2name": "房地产业",
+      "level2nameacronym": "fdcy",
+      "level2code": "K70",
+      "compcode": null
+    },
+    {
+      "level2name": "非金属矿采选业",
+      "level2nameacronym": "fjskcxy",
+      "level2code": "B10",
+      "compcode": null
+    },
+    {
+      "level2name": "非金属矿物制品业",
+      "level2nameacronym": "fjskwzpy",
+      "level2code": "C30",
+      "compcode": null
+    },
+    {
+      "level2name": "废弃资源综合利用业",
+      "level2nameacronym": "fqzyzhlyy",
+      "level2code": "C42",
+      "compcode": null
+    },
+    {
+      "level2name": "房屋建筑业",
+      "level2nameacronym": "fwjzy",
+      "level2code": "E47",
+      "compcode": null
+    },
+    {
+      "level2name": "纺织服装、服饰业",
+      "level2nameacronym": "fzfzfsy",
+      "level2code": "C18",
+      "compcode": null
+    },
+    {
+      "level2name": "纺织业",
+      "level2nameacronym": "fzy",
+      "level2code": "C17",
+      "compcode": null
+    },
+    {
+      "level2name": "广播、电视、电影和影视录音制作业",
+      "level2nameacronym": "gbdsdyhyslyzzy",
+      "level2code": "R86",
+      "compcode": null
+    },
+    {
+      "level2name": "管道运输业",
+      "level2nameacronym": "gdysy",
+      "level2code": "G57",
+      "compcode": null
+    },
+    {
+      "level2name": "公共设施管理业",
+      "level2nameacronym": "ggssgly",
+      "level2code": "N78",
+      "compcode": null
+    },
+    {
+      "level2name": "货币金融服务",
+      "level2nameacronym": "hbjrfw",
+      "level2code": "J66",
+      "compcode": null
+    },
+    {
+      "level2name": "航空运输业",
+      "level2nameacronym": "hkysy",
+      "level2code": "G56",
+      "compcode": null
+    },
+    {
+      "level2name": "互联网和相关服务",
+      "level2nameacronym": "hlwhxgfw",
+      "level2code": "I64",
+      "compcode": null
+    },
+    {
+      "level2name": "黑色金属矿采选业",
+      "level2nameacronym": "hsjskcxy",
+      "level2code": "B08",
+      "compcode": null
+    },
+    {
+      "level2name": "黑色金属冶炼和压延加工业",
+      "level2nameacronym": "hsjsylhyyjgy",
+      "level2code": "C31",
+      "compcode": null
+    },
+    {
+      "level2name": "化学纤维制造业",
+      "level2nameacronym": "hxxwzzy",
+      "level2code": "C28",
+      "compcode": null
+    },
+    {
+      "level2name": "化学原料和化学制品制造业",
+      "level2nameacronym": "hxylhhxzpzzy",
+      "level2code": "C26",
+      "compcode": null
+    },
+    {
+      "level2name": "机动车、电子产品和日用产品修理业",
+      "level2nameacronym": "jdcdzcphrycpxly",
+      "level2code": "O80",
+      "compcode": null
+    },
+    {
+      "level2name": "家具制造业",
+      "level2nameacronym": "jjzzy",
+      "level2code": "C21",
+      "compcode": null
+    },
+    {
+      "level2name": "计算机、通信和其他电子设备制造业",
+      "level2nameacronym": "jsjtxhqtdzsbzzy",
+      "level2code": "C39",
+      "compcode": null
+    },
+    {
+      "level2name": "金属制品业",
+      "level2nameacronym": "jszpy",
+      "level2code": "C33",
+      "compcode": null
+    },
+    {
+      "level2name": "教育",
+      "level2nameacronym": "jy",
+      "level2code": "P82",
+      "compcode": null
+    },
+    {
+      "level2name": "酒、饮料和精制茶制造业",
+      "level2nameacronym": "jylhjzczzy",
+      "level2code": "C15",
+      "compcode": null
+    },
+    {
+      "level2name": "建筑安装业",
+      "level2nameacronym": "jzazy",
+      "level2code": "E49",
+      "compcode": null
+    },
+    {
+      "level2name": "建筑装饰和其他建筑业",
+      "level2nameacronym": "jzzshqtjzy",
+      "level2code": "E50",
+      "compcode": null
+    },
+    {
+      "level2name": "开采辅助活动",
+      "level2nameacronym": "kcfzhd",
+      "level2code": "B11",
+      "compcode": null
+    },
+    {
+      "level2name": "科技推广和应用服务业",
+      "level2nameacronym": "kjtghyyfwy",
+      "level2code": "M75",
+      "compcode": null
+    },
+    {
+      "level2name": "零售业",
+      "level2nameacronym": "lsy",
+      "level2code": "F52",
+      "compcode": null
+    },
+    {
+      "level2name": "林业",
+      "level2nameacronym": "ly",
+      "level2code": "A02",
+      "compcode": null
+    },
+    {
+      "level2name": "木材加工和木、竹、藤、棕、草制品业",
+      "level2nameacronym": "mcjghmztzczpy",
+      "level2code": "C20",
+      "compcode": null
+    },
+    {
+      "level2name": "煤炭开采和洗选业",
+      "level2nameacronym": "mtkchxxy",
+      "level2code": "B06",
+      "compcode": null
+    },
+    {
+      "level2name": "农副食品加工业",
+      "level2nameacronym": "nfspjgy",
+      "level2code": "C13",
+      "compcode": null
+    },
+    {
+      "level2name": "农、林、牧、渔服务业",
+      "level2nameacronym": "nlmyfwy",
+      "level2code": "A05",
+      "compcode": null
+    },
+    {
+      "level2name": "农业",
+      "level2nameacronym": "ny",
+      "level2code": "A01",
+      "compcode": null
+    },
+    {
+      "level2name": "批发业",
+      "level2nameacronym": "pfy",
+      "level2code": "F51",
+      "compcode": null
+    },
+    {
+      "level2name": "皮革、毛皮、羽毛及其制品和制鞋业",
+      "level2nameacronym": "pgmpymjqzphzxy",
+      "level2code": "C19",
+      "compcode": null
+    },
+    {
+      "level2name": "汽车制造业",
+      "level2nameacronym": "qczzy",
+      "level2code": "C36",
+      "compcode": null
+    },
+    {
+      "level2name": "其他金融业",
+      "level2nameacronym": "qtjry",
+      "level2code": "J69",
+      "compcode": null
+    },
+    {
+      "level2name": "其他制造业",
+      "level2nameacronym": "qtzzy",
+      "level2code": "C41",
+      "compcode": null
+    },
+    {
+      "level2name": "软件和信息技术服务业",
+      "level2nameacronym": "rjhxxjsfwy",
+      "level2code": "I65",
+      "compcode": null
+    },
+    {
+      "level2name": "燃气生产和供应业",
+      "level2nameacronym": "rqschgyy",
+      "level2code": "D45",
+      "compcode": null
+    },
+    {
+      "level2name": "水的生产和供应业",
+      "level2nameacronym": "sdschgyy",
+      "level2code": "D46",
+      "compcode": null
+    },
+    {
+      "level2name": "食品制造业",
+      "level2nameacronym": "spzzy",
+      "level2code": "C14",
+      "compcode": null
+    },
+    {
+      "level2name": "水上运输业",
+      "level2nameacronym": "ssysy",
+      "level2code": "G55",
+      "compcode": null
+    },
+    {
+      "level2name": "生态保护和环境治理业",
+      "level2nameacronym": "stbhhhjzly",
+      "level2code": "N77",
+      "compcode": null
+    },
+    {
+      "level2name": "商务服务业",
+      "level2nameacronym": "swfwy",
+      "level2code": "L72",
+      "compcode": null
+    },
+    {
+      "level2name": "石油和天然气开采业",
+      "level2nameacronym": "syhtrqkcy",
+      "level2code": "B07",
+      "compcode": null
+    },
+    {
+      "level2name": "石油加工、炼焦和核燃料加工业",
+      "level2nameacronym": "syjgljhhrljgy",
+      "level2code": "C25",
+      "compcode": null
+    },
+    {
+      "level2name": "铁路、船舶、航空航天和其他运输设备制造业",
+      "level2nameacronym": "tlcbhkhthqtyssbzzy",
+      "level2code": "C37",
+      "compcode": null
+    },
+    {
+      "level2name": "铁路运输业",
+      "level2nameacronym": "tlysy",
+      "level2code": "G53",
+      "compcode": null
+    },
+    {
+      "level2name": "土木工程建筑业",
+      "level2nameacronym": "tmgcjzy",
+      "level2code": "E48",
+      "compcode": null
+    },
+    {
+      "level2name": "体育",
+      "level2nameacronym": "ty",
+      "level2code": "R88",
+      "compcode": null
+    },
+    {
+      "level2name": "通用设备制造业",
+      "level2nameacronym": "tysbzzy",
+      "level2code": "C34",
+      "compcode": null
+    },
+    {
+      "level2name": "文化艺术业",
+      "level2nameacronym": "whysy",
+      "level2code": "R87",
+      "compcode": null
+    },
+    {
+      "level2name": "文教、工美、体育和娱乐用品制造业",
+      "level2nameacronym": "wjgmtyhylypzzy",
+      "level2code": "C24",
+      "compcode": null
+    },
+    {
+      "level2name": "卫生",
+      "level2nameacronym": "ws",
+      "level2code": "Q83",
+      "compcode": null
+    },
+    {
+      "level2name": "橡胶和塑料制品业",
+      "level2nameacronym": "xjhslzpy",
+      "level2code": "C29",
+      "compcode": null
+    },
+    {
+      "level2name": "新闻和出版业",
+      "level2nameacronym": "xwhcby",
+      "level2code": "R85",
+      "compcode": null
+    },
+    {
+      "level2name": "研究和试验发展",
+      "level2nameacronym": "yjhsyfz",
+      "level2code": "M73",
+      "compcode": null
+    },
+    {
+      "level2name": "仪器仪表制造业",
+      "level2nameacronym": "yqybzzy",
+      "level2code": "C40",
+      "compcode": null
+    },
+    {
+      "level2name": "印刷和记录媒介复制业",
+      "level2nameacronym": "yshjlmjfzy",
+      "level2code": "C23",
+      "compcode": null
+    },
+    {
+      "level2name": "有色金属矿采选业",
+      "level2nameacronym": "ysjskcxy",
+      "level2code": "B09",
+      "compcode": null
+    },
+    {
+      "level2name": "有色金属冶炼和压延加工业",
+      "level2nameacronym": "ysjsylhyyjgy",
+      "level2code": "C32",
+      "compcode": null
+    },
+    {
+      "level2name": "渔业",
+      "level2nameacronym": "yy",
+      "level2code": "A04",
+      "compcode": null
+    },
+    {
+      "level2name": "医药制造业",
+      "level2nameacronym": "yyzzy",
+      "level2code": "C27",
+      "compcode": null
+    },
+    {
+      "level2name": "邮政业",
+      "level2nameacronym": "yzy",
+      "level2code": "G60",
+      "compcode": null
+    },
+    {
+      "level2name": "资本市场服务",
+      "level2nameacronym": "zbscfw",
+      "level2code": "J67",
+      "compcode": null
+    },
+    {
+      "level2name": "综合",
+      "level2nameacronym": "zh",
+      "level2code": "S90",
+      "compcode": null
+    },
+    {
+      "level2name": "租赁业",
+      "level2nameacronym": "zly",
+      "level2code": "L71",
+      "compcode": null
+    },
+    {
+      "level2name": "住宿业",
+      "level2nameacronym": "zsy",
+      "level2code": "H61",
+      "compcode": null
+    },
+    {
+      "level2name": "装卸搬运和运输代理业",
+      "level2nameacronym": "zxbyhysdly",
+      "level2code": "G58",
+      "compcode": null
+    },
+    {
+      "level2name": "专业技术服务业",
+      "level2nameacronym": "zyjsfwy",
+      "level2code": "M74",
+      "compcode": null
+    },
+    {
+      "level2name": "专用设备制造业",
+      "level2nameacronym": "zysbzzy",
+      "level2code": "C35",
+      "compcode": null
+    },
+    {
+      "level2name": "造纸和纸制品业",
+      "level2nameacronym": "zzhzzpy",
+      "level2code": "C22",
+      "compcode": null
+    }
+  ]
+}

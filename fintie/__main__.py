@@ -15,8 +15,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """数据模块命令行"""
-from .cli import FinTie
+from .cli import cli
+
+
+def main():
+    cli()
 
 
 if __name__ == "__main__":
-    FinTie()
+    main()

@@ -1,0 +1,13 @@
+version: "3"
+services:
+    fintie:
+        image: "fintie:dev"
+        build:
+            context: .
+            dockerfile: Dockerfile
+        hostname: fintie
+        stdin_open: true
+        tty: true
+        working_dir: '/fintie'
+        volumes:
+            - ".:/fintie"

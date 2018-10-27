@@ -14,11 +14,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+"""数据模块命令行"""
+from fintie.cli import cli
 
-__title__ = 'fintie'
-__version__ = '0.1.1'
-__description__ = 'a common data obtain tool'
-__author__ = 'qytz'
-__author_email__ = 'hhhhhf@foxmail.com'
-__url__ = 'https://github.com/qytz/fintie'
-__license__ = 'Apache License 2.0'
+
+MODULE_DATA_DIR = "stock"
+
+
+@cli.group("stock")
+def stock_cli_group():
+    """股票相关的数据"""
+    pass
+
+
+if __name__ == "__main__":
+    stock_cli_group()

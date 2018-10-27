@@ -15,57 +15,65 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """数据模块命令行"""
-import os
-from plumbum import cli
-from .__version__ import __version__
+import logging
+
+import click
+
+from .config import load_config, set_config, def_config_path
 
 
-class FinApp(cli.Application):
-    """Base FinTie command"""
-    VERSION = __version__
+@click.group()
+@click.option("-v", "--verbose", count=True)
+@click.option(
+    "-c",
+    "--conf",
+    type=click.Path(),
+    help="配置文件",
+    default=def_config_path,
+    show_default=True,
+)
+@click.option("-d", "--data-path", type=click.Path(), help="数据存储路径，会覆盖 conf 文件里的设置")
+def cli(verbose, conf, data_path):
+    """Console script for fintie
 
-    _verbose = 0
-    _debug = False
-    _root_dir = os.path.expanduser("~/.local/fintie")
-    _data_dir = os.path.join(_root_dir, 'default')
+    Copyright (C) 2017-present qytz <hhhhhf@foxmail.com>
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        if self.parent:
-            self._verbose = self.parent._verbose
-            self._debug = self.parent._debug
-            self._root_dir = self.parent._root_dir
-            self._data_dir = os.path.join(self._root_dir, 'default')
-        os.makedirs(self._data_dir, exist_ok=True)
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-    @cli.switch(['-v', '--verbose'], overridable=True, list=True, argtype=None)
-    def set_verbose(self, val):
-        """If given, I will be very talkative"""
-        self._verbose += len(val)
+        http://www.apache.org/licenses/LICENSE-2.0
 
-    @cli.switch(['-d', '--debug'], overridable=True)
-    def set_debug(self):
-        """If given, I will give diagnosis infos"""
-        self._debug = True
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 
-    @cli.switch(['-r', '--root'], argtype=str, overridable=True)
-    def set_root(self, root):
-        """The root directory to store data, default='~/.local/fintie'"""
-        self._root_dir = os.path.abspath(os.path.expanduser(root))
-        os.makedirs(self._root_dir, exist_ok=True)
+    Project url: https://github.com/qytz/fintie
+    """
+    log_levels = [
+        logging.CRITICAL,
+        logging.ERROR,
+        logging.WARNING,
+        logging.INFO,
+        logging.DEBUG,
+    ]
+    if verbose >= len(log_levels):
+        verbose = len(log_levels) - 1
+    log_fmt = (
+        "%(asctime)-15s %(levelname)s %(filename)s %(lineno)d %(process)d %(message)s"
+    )
+    logging.basicConfig(
+        filename="fintie.log", level=log_levels[verbose], format=log_fmt
+    )
 
+    if conf:
+        load_config(conf)
 
-class FinTie(FinApp):
-    """FinTie command"""
-    def main(self, *args):
-        if args:
-            print("Unknown command {0!r}".format(args[0]))
-            return 1   # error exit code
-        if not self.nested_command:           # will be ``None`` if no sub-command follows
-            print("No command given")
-            return 1   # error exit code
-        return 0
+    if data_path:
+        set_config("data_path", data_path)
 
 
 if __name__ == "__main__":
-    FinTie()
+    cli()

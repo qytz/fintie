@@ -14,11 +14,24 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from collections import defaultdict
 
-__title__ = 'fintie'
-__version__ = '0.1.1'
-__description__ = 'a common data obtain tool'
-__author__ = 'qytz'
-__author_email__ = 'hhhhhf@foxmail.com'
-__url__ = 'https://github.com/qytz/fintie'
-__license__ = 'Apache License 2.0'
+import aiohttp
+
+_http_session = None
+_init_in_session = defaultdict()
+
+
+def get_http_session(*init_urls):
+    global _http_session
+    if not _http_session:
+        _http_session = aiohttp.ClientSession(
+            headers={
+                "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:62.0) Gecko/20100101 Firefox/62.0"
+            }
+        )
+    # aws = []
+    # for url in init_urls:
+    #     aws.append(_http_session.get(url))
+    # await asyncio.gather(*aws, return_exceptions=True)
+    return _http_session

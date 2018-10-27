@@ -1,0 +1,598 @@
+{
+    "基本指标": [
+        {
+            "name": "总市值(亿)",
+            "field": "mc",
+            "comment": "亿元",
+            "adj": 0
+        },
+        {
+            "name": "流通市值(亿)",
+            "field": "fmc",
+            "comment": "亿元",
+            "adj": 0
+        },
+        {
+            "name": "动态市盈率(倍)",
+            "field": "pettm",
+            "comment": "股价/最近四个季度的每股收益",
+            "adj": 0
+        },
+        {
+            "name": "静态市盈率(倍)",
+            "field": "pelyr",
+            "comment": "股价/上一年度的每股收益",
+            "adj": 0
+        },
+        {
+            "name": "每股收益",
+            "field": "eps",
+            "comment": "每股收益",
+            "adj": 1
+        },
+        {
+            "name": "每股净资产",
+            "field": "bps",
+            "comment": "每股净资产",
+            "adj": 1
+        },
+        {
+            "name": "净资产收益率(%)",
+            "field": "roediluted",
+            "comment": "净资产收益率（摊薄）",
+            "adj": 1
+        },
+        {
+            "name": "净利润(万)",
+            "field": "netprofit",
+            "comment": "净利润",
+            "adj": 1
+        },
+        {
+            "name": "股息率(%)",
+            "field": "dy",
+            "comment": "股息/股票价格＊100%",
+            "adj": 0
+        },
+        {
+            "name": "市净率(倍)",
+            "field": "pb",
+            "comment": "市净率",
+            "adj": 0
+        }
+    ],
+    "行情指标": [
+        {
+            "name": "当前价",
+            "field": "current",
+            "comment": "当前价",
+            "adj": 0
+        },
+        {
+            "name": "本日涨跌幅(%)",
+            "field": "pct",
+            "comment": "单位%",
+            "adj": 0
+        },
+        {
+            "name": "前5日涨跌幅(%)",
+            "field": "pct5",
+            "comment": "单位%",
+            "adj": 0
+        },
+        {
+            "name": "前10日涨跌幅(%)",
+            "field": "pct10",
+            "comment": "单位%",
+            "adj": 0
+        },
+        {
+            "name": "前20日涨跌幅(%)",
+            "field": "pct20",
+            "comment": "单位%",
+            "adj": 0
+        },
+        {
+            "name": "近1月涨跌幅(%)",
+            "field": "pct1m",
+            "comment": "单位%",
+            "adj": 0
+        },
+        {
+            "name": "本日振幅(%)",
+            "field": "chgpct",
+            "comment": "(本日最高-本日最低)/上期收盘价＊100%",
+            "adj": 0
+        },
+        {
+            "name": "前5日振幅(%)",
+            "field": "chgpct5",
+            "comment": "单位%",
+            "adj": 0
+        },
+        {
+            "name": "前10日振幅(%)",
+            "field": "chgpct10",
+            "comment": "单位%",
+            "adj": 0
+        },
+        {
+            "name": "前20日振幅(%)",
+            "field": "chgpct20",
+            "comment": "单位%",
+            "adj": 0
+        },
+        {
+            "name": "近1月振幅(%)",
+            "field": "chgpct1m",
+            "comment": "单位%",
+            "adj": 0
+        },
+        {
+            "name": "本日成交量(万)",
+            "field": "volume",
+            "comment": "",
+            "adj": 0
+        },
+        {
+            "name": "30日均量(万)",
+            "field": "volavg30",
+            "comment": "",
+            "adj": 0
+        },
+        {
+            "name": "成交额(万)",
+            "field": "amount",
+            "comment": "",
+            "adj": 0
+        },
+        {
+            "name": "本日换手率(%)",
+            "field": "tr",
+            "comment": "",
+            "adj": 0
+        },
+        {
+            "name": "前5日换手率(%)",
+            "field": "tr5",
+            "comment": "",
+            "adj": 0
+        },
+        {
+            "name": "前10日换手率(%)",
+            "field": "tr10",
+            "comment": "",
+            "adj": 0
+        },
+        {
+            "name": "前20日换手率(%)",
+            "field": "tr20",
+            "comment": "",
+            "adj": 0
+        },
+        {
+            "name": "近1月换手率(%)",
+            "field": "tr1m",
+            "comment": "",
+            "adj": 0
+        }
+    ],
+    "财务报表": [
+        {
+            "每股数据": [
+                {
+                    "name": "每股收益（摊薄）",
+                    "field": "epsdiluted",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "每股收益（加权）",
+                    "field": "epsweighted",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "每股经营性现金流",
+                    "field": "ocps",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "每股现金流",
+                    "field": "cps",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "每股未分配利润",
+                    "field": "upps",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "每股销售收入",
+                    "field": "sps",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "每股资本公积金",
+                    "field": "csps",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "扣除非经常性损益后的每股收益",
+                    "field": "beps",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "每股收益按年增长率(%)",
+                    "field": "epsyg",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "每股收益按季增长率(%)",
+                    "field": "epsqg",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "每股未分配利润按季增长率(%)",
+                    "field": "upqg",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "每股企业价值",
+                    "field": "evps",
+                    "comment": "",
+                    "adj": 0
+                }
+            ]
+        },
+        {
+            "利润表": [
+                {
+                    "name": "营业总收入(万)",
+                    "field": "tbi",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "营业收入(万)",
+                    "field": "bi",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "营业总成本(万)",
+                    "field": "tbc",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "营业成本(万)",
+                    "field": "bc",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "营业利润(万)",
+                    "field": "bp",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "利润总额(万)",
+                    "field": "tp",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "归属于母公司所有者的净利润(万)",
+                    "field": "np",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "息税前利润(万)",
+                    "field": "pbt",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "所得税(万)",
+                    "field": "tax",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "营业外收支净额(万)",
+                    "field": "nbe",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "财务费用(万)",
+                    "field": "fe",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "投资收益(万)",
+                    "field": "ip",
+                    "comment": "",
+                    "adj": 1
+                }
+            ]
+        },
+        {
+            "资产负债表": [
+                {
+                    "name": "流动资产(万)",
+                    "field": "ca",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "非流动资产(万)",
+                    "field": "nca",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "流动负债(万)",
+                    "field": "cl",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "非流动负债(万)",
+                    "field": "ncl",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "负债合计(万)",
+                    "field": "tl",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "归属母公司股东权益(万)",
+                    "field": "eq",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "所有权益合计(万)",
+                    "field": "teq",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "未分配利润(万)",
+                    "field": "up",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "货币资金(万)",
+                    "field": "cur",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "固定资产净值(万)",
+                    "field": "fa",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "固定资产净额(万)",
+                    "field": "fan",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "长期投资(万)",
+                    "field": "li",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "应收账款(万)",
+                    "field": "rec",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "存货(万)",
+                    "field": "inv",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "无形资产(万)",
+                    "field": "ia",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "资产总计(万)",
+                    "field": "ta",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "资本公积(万)",
+                    "field": "cs",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "实收资本(万)",
+                    "field": "pc",
+                    "comment": "",
+                    "adj": 1
+                }
+            ]
+        },
+        {
+            "现金流量表": [
+                {
+                    "name": "筹资活动产生的现金流量净额(万)",
+                    "field": "fncf",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "投资活动产生的现金流量净额(万)",
+                    "field": "incf",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "经营活动产生的现金流量净额(万)",
+                    "field": "bncf",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "现金及现金等价物净增加额(万)",
+                    "field": "cnr",
+                    "comment": "",
+                    "adj": 1
+                },
+                {
+                    "name": "期末现金及现金等价物余额(万)",
+                    "field": "fcb",
+                    "comment": "",
+                    "adj": 1
+                }
+            ]
+        }
+    ],
+    "财务比率": [
+        {
+            "name": "速动比率(%)",
+            "field": "qr",
+            "comment": "(当期流动资产合计-存货)/当期流动负债合计",
+            "adj": 1
+        },
+        {
+            "name": "流动比率(%)",
+            "field": "cr",
+            "comment": "当期流动资产合计/当期流动负债合计",
+            "adj": 1
+        },
+        {
+            "name": "净资产增长率(%)",
+            "field": "nag",
+            "comment": "(本期净资产-上期净资产)/上期净资产*100%",
+            "adj": 1
+        },
+        {
+            "name": "净资产收益率(加权)(%)",
+            "field": "roeweighted",
+            "comment": "",
+            "adj": 1
+        },
+        {
+            "name": "主营业务收入增长率(%)",
+            "field": "mbig",
+            "comment": "(本期主营业务收入-上期主营业务收入)/上期主营业务收入*100%",
+            "adj": 1
+        },
+        {
+            "name": "净利润增长率(%)",
+            "field": "nig",
+            "comment": "(本期净利润-上期净利润)/上期净利润*100%",
+            "adj": 1
+        },
+        {
+            "name": "总资产增长率(%)",
+            "field": "tag",
+            "comment": "(本期总资产-上期总资产)/上期总资产*100%",
+            "adj": 1
+        },
+        {
+            "name": "销售毛利率(%)",
+            "field": "sgpr",
+            "comment": "(当期主营业务收入-当期主营业务成本)/当期主营业务收入*100%",
+            "adj": 1
+        },
+        {
+            "name": "销售净利率(%)",
+            "field": "snpr",
+            "comment": "(当期净利润/当期主营业务收入)*100%",
+            "adj": 1
+        },
+        {
+            "name": "资产负债率(%)",
+            "field": "dar",
+            "comment": "负债总额/资产总额*100%",
+            "adj": 1
+        }
+    ],
+    "雪球指标": [
+        {
+            "name": "累计关注人数",
+            "field": "follow",
+            "comment": "",
+            "adj": 0
+        },
+        {
+            "name": "累计讨论次数",
+            "field": "tweet",
+            "comment": "",
+            "adj": 0
+        },
+        {
+            "name": "累计交易分享数",
+            "field": "deal",
+            "comment": "",
+            "adj": 0
+        },
+        {
+            "name": "一周新增关注",
+            "field": "follow7d",
+            "comment": "",
+            "adj": 0
+        },
+        {
+            "name": "一周新增讨论数",
+            "field": "tweet7d",
+            "comment": "",
+            "adj": 0
+        },
+        {
+            "name": "一周新增交易分享数",
+            "field": "deal7d",
+            "comment": "",
+            "adj": 0
+        },
+        {
+            "name": "一周关注增长率(%)",
+            "field": "follow7dpct",
+            "comment": "",
+            "adj": 0
+        },
+        {
+            "name": "一周讨论增长率(%)",
+            "field": "tweet7dpct",
+            "comment": "",
+            "adj": 0
+        },
+        {
+            "name": "一周交易分享增长率(%)",
+            "field": "deal7dpct",
+            "comment": "",
+            "adj": 0
+        }
+    ]
+}
