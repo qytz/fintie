@@ -38,10 +38,13 @@ setup(
         ]
     },
     install_requires=[
-        'click',
-        'uvloop',
-        'python-dateutil',
-        'ruamel.yaml'],
+        "click",
+        "aiohttp",
+        "python-dateutil",
+        "sqlalchemy",
+        "pandas",
+        "pytest",
+        ],
     license=about['__license__'],
     zip_safe=True,
     keywords='fintie',
