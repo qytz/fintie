@@ -116,7 +116,7 @@ async def async_get_list_qutes(
         async with session.get(url, params=params) as resp:
             if resp.status != 200:
                 logger.warning(
-                    "Download list_quotes from url failed: http %s", url, resp.status
+                    "Download list_quotes from url %s failed: http %s", url, resp.status
                 )
                 return None
             return await resp.json()

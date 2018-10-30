@@ -86,7 +86,7 @@ import pandas as pd
 from .cli import stock_cli_group, MODULE_DATA_DIR
 from ..config import get_config
 from ..env import _init_in_session
-from ..utils import fetch_http_data
+from ..utils import fetch_http_data, add_doc
 
 
 logger = logging.getLogger(__file__)
@@ -128,7 +128,7 @@ async def async_get_field_values(session, field, return_df=True):
     return pd.DataFrame(data, columns=(field,))
 
 
-async def async_pick_stocks(session, data_path=None, return_df=True, **kwargs):
+async def async_pick_stocks(session, filter_dict=None, data_path=None, return_df=True):
     """
     雪球选股器接口，此接口支持的参数较多，具体请参考 API 文档
 
@@ -136,7 +136,7 @@ async def async_pick_stocks(session, data_path=None, return_df=True, **kwargs):
     出错，返回 None
 
     :param session: `aiohttp.ClientSession` 对象，同步接口不需要传
-    :param kwargs: 选股参数，支持的字段名见 `API 文档`
+    :param filter_dict: 需要的字段及过滤条件，支持的字段名见 `API 文档`
     :param data_path: 数据保存路径
     :param return_df: 是否返回 `pandas.DataFrame` 对象，False 返回原始数据
     :returns: 行情原始数据或带有行情数据的 `pandas.DataFrame` 对象，见 return_df 参数
@@ -144,20 +144,21 @@ async def async_pick_stocks(session, data_path=None, return_df=True, **kwargs):
     取值方法
     GET https://xueqiu.com/stock/screener/screen.json
 
-    parameters:
-        category: SH/US  -- 沪深/美股   required
-        orderby:symbol   -- 排序字段    required
-        oder:desc        -- 升降排序    required
-        exchange: SH/SZ  -- 沪市/深市
-        areacode: 地域板块
-        indcode: 行业
-        filter_fileds: min_max
-        current:ALL     当前价
-        pct:ALL         本日涨跌幅
-        volume:ALL      本日成交量
-        page:1
-        size: 30
-        _:timestamp
+    filter_dict:
+
+        * category: SH/US  -- 沪深/美股   required
+        * orderby:symbol   -- 排序字段    required
+        * oder:desc        -- 升降排序    required
+        * exchange: SH/SZ  -- 沪市/深市
+        * areacode: 地域板块
+        * indcode: 行业
+        * filter_fileds: min_max
+        * current:ALL     当前价
+        * pct:ALL         本日涨跌幅
+        * volume:ALL      本日成交量
+        * page:1
+        * size: 30
+        * _:timestamp
     """
     await _init(session)
 
@@ -177,7 +178,8 @@ async def async_pick_stocks(session, data_path=None, return_df=True, **kwargs):
         # "indcode": 行业
         # "filter_fileds": min_max
     }
-    params.update(kwargs)
+    if filter_dict:
+        params.update(filter_dict)
 
     url = "https://xueqiu.com/stock/screener/screen.json"
 
@@ -222,13 +224,15 @@ async def async_pick_stocks(session, data_path=None, return_df=True, **kwargs):
         return stock_list
 
     df = pd.DataFrame(stock_list)
-    df.set_index(["symbol"], inplace=True)
-    df.dropna(axis="columns", how="all", inplace=True)
-    # convert to numertic types
-    # df.apply(pd.to_numeric, errors="ignore")
+    if stock_list:
+        df.set_index(["symbol"], inplace=True)
+        df.dropna(axis="columns", how="all", inplace=True)
+        # convert to numertic types
+        # df.apply(pd.to_numeric, errors="ignore")
     return df
 
 
+@add_doc(async_pick_stocks.__doc__)
 def pick_stocks(*args, **kwargs):
     ret = fetch_http_data(async_pick_stocks, *args, **kwargs)
     if isinstance(ret, Exception):
@@ -260,7 +264,8 @@ def pick_stocks_cli(save_path, show, fields):
             click.echo(f"{field} invalid skipped")
             continue
         kwargs[key] = val
-    data = pick_stocks(save_path, **kwargs)
+    print(kwargs)
+    data = pick_stocks(kwargs, save_path)
     if show:
         click.echo(data)
 
