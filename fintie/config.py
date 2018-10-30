@@ -28,7 +28,7 @@ def load_config(config_file=def_config_path):
     global _config
     config_file = Path(config_file)
     if not config_file.exists():
-        logger.warning('配置文件不存在，配置设置为空')
+        logger.warning("配置文件(%s)不存在，配置设置为空", config_file)
         _config = {}
         return
 

@@ -22,4 +22,4 @@
 """
 from . import stock
 
-__all__ = stock.__all__
+__all__ = ["stock"]

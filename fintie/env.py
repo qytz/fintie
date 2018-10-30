@@ -22,16 +22,13 @@ _http_session = None
 _init_in_session = defaultdict()
 
 
-def get_http_session(*init_urls):
+def get_http_session(force=False):
     global _http_session
-    if not _http_session:
+    if force or not _http_session:
+        _init_in_session.clear()
         _http_session = aiohttp.ClientSession(
             headers={
                 "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:62.0) Gecko/20100101 Firefox/62.0"
             }
         )
-    # aws = []
-    # for url in init_urls:
-    #     aws.append(_http_session.get(url))
-    # await asyncio.gather(*aws, return_exceptions=True)
     return _http_session

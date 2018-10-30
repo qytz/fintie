@@ -14,12 +14,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import logging
 import asyncio
 
 from dateutil.relativedelta import relativedelta
 from dateutil.parser import parse as parse_datetime
 
-from fintie.env import get_http_session, _init_in_session
+from fintie.env import get_http_session
+
+
+logger = logging.getLogger(__name__)
 
 
 def convert_number(num_str, cls=int):
@@ -71,13 +75,12 @@ def parse_dt(date_str, return_date=False):
 
 
 async def wrap_session_run(func, *args, **kwargs):
-    async with get_http_session() as session:
+    async with get_http_session(force=True) as session:
         ret = await func(session, *args, **kwargs)
-        _init_in_session.clear()
         return ret
 
 
-def async2sync_run(*aws, return_exceptions=True, loop=None):
+def async2sync_run(*aws, return_exceptions=True):
     """将异步函数转为同步函数
 
     :params aws: 异步协程列表
@@ -85,8 +88,12 @@ def async2sync_run(*aws, return_exceptions=True, loop=None):
     :returns: 一个列表包含了所有协程的返回值
     """
     loop = asyncio.get_event_loop()
+    if loop.is_running():
+        logger.warning("EventLoop 已经在运行，请调用异步接口！（或许您是在新版的 Notebook 中？）")
+        return None
+    # TODO: use ayncio.run for Python 3.7
     return loop.run_until_complete(
-        asyncio.gather(*aws, loop=loop, return_exceptions=return_exceptions)
+        asyncio.gather(*aws, return_exceptions=return_exceptions)
     )
 
 
