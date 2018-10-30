@@ -8,12 +8,12 @@ click = "*"
 aiohttp = "*"
 python-dateutil = "*"
 sqlalchemy = "*"
-sphinx = "*"
 pandas = "*"
 
 [dev-packages]
 sphinx = "*"
 pytest = "*"
+ipykernel = "*"
 
 [requires]
 python_version = "3.7"
