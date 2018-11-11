@@ -36,7 +36,7 @@
     import pandas as pd
     from pathlib import Path
 
-    with Path('xxx.json').open() as f:
+    with Path('xxx.json').open(encoding="utf-8") as f:
         data = json.load(f)
 
     # 股东户数统计
@@ -155,7 +155,7 @@ async def async_get_gudong(session, symbol, gd_type, data_path=None):
         os.makedirs(data_path, exist_ok=True)
         data_fname = "-".join((symbol, gd_type, date_str)) + ".json"
         data_file = data_path / data_fname
-        with data_file.open("w") as dataf:
+        with data_file.open("w", encoding="utf-8") as dataf:
             json.dump(gudong_data, dataf, indent=4, ensure_ascii=False)
 
     return gudong_data

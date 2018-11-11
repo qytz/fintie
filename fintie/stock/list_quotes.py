@@ -174,7 +174,7 @@ async def async_get_list_qutes(
         os.makedirs(data_path, exist_ok=True)
         data_fname = data_type + "-" + datetime.now().strftime("%Y%m%d%H%M%S") + ".json"
         data_file = data_path / data_fname
-        with data_file.open("w") as dataf:
+        with data_file.open("w", encoding="utf-8") as dataf:
             json.dump(quotes, dataf, indent=4, ensure_ascii=False)
 
     if not return_df:

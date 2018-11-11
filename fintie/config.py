@@ -32,7 +32,7 @@ def load_config(config_file=def_config_path):
         _config = {}
         return
 
-    with config_file.open() as f:
+    with config_file.open(encoding="utf-8") as f:
         _config = json.load(f)
 
 

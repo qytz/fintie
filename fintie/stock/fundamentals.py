@@ -109,7 +109,7 @@ async def async_get_fundamentals(session, symbols, data_path):
     async def get_one_funda(symbol, tab_name, path):
         data = await async_get_funda_tab(session, symbol, tab_name, return_df=False)
         save_file = path / (tab_name + ".csv")
-        with save_file.open("w") as f:
+        with save_file.open("w", encoding="utf-8") as f:
             f.write(data)
 
     await _init(session)

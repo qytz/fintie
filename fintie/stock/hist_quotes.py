@@ -36,7 +36,7 @@
     from pathlib import Path
     import pandas as pd
 
-    with Path('data.json').open() as f:
+    with Path('data.json').open(encoding="utf-8") as f:
         quotes = json.load(f)
 
     df = pd.DataFrame(data=quotes['item'], column=quotes['column'])
@@ -150,7 +150,7 @@ async def async_get_hist_quotes(
             + ".json"
         )
         data_file = file_path / data_fname
-        with data_file.open("w") as dataf:
+        with data_file.open("w", encoding="utf-8") as dataf:
             json.dump(quotes, dataf, indent=4, ensure_ascii=False)
 
     if not return_df:

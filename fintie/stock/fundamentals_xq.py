@@ -48,7 +48,7 @@
     import json
 
     from pathlib import Path
-    with open(Path("xxx.json")) as f:
+    with Path("xxx.json").open(encoding="utf-8") as f:
         data = json.load(f)
 """
 import os
@@ -149,7 +149,7 @@ async def async_get_funda(session, symbol, table, data_path=None, return_df=True
         os.makedirs(data_path, exist_ok=True)
         data_fname = "-".join((symbol, table, date_str)) + ".json"
         data_file = data_path / data_fname
-        with data_file.open("w") as dataf:
+        with data_file.open("w", encoding="utf-8") as dataf:
             json.dump(funda_data, dataf, indent=4, ensure_ascii=False)
 
     if not return_df or not list_data:

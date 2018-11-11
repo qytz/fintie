@@ -40,7 +40,7 @@
 
         import pandas as pd
 
-        with Path('SZ002353-trade-20181019201938.json').open() as f:
+        with Path('SZ002353-trade-20181019201938.json').open(encoding="utf-8") as f:
             quotes = json.load(f)
 
         df = pd.DataFrame(data=quotes["items"])
@@ -127,7 +127,7 @@ async def async_get_trade_info(session, symbol, data_path=None, return_df=True):
             "-".join((symbol, "trade", ref_dt.strftime("%Y%m%d%H%M%S"))) + ".json"
         )
         data_file = data_path / data_fname
-        with data_file.open("w") as dataf:
+        with data_file.open("w", encoding="utf-8") as dataf:
             json.dump(quotes, dataf, indent=4, ensure_ascii=False)
 
     if not return_df:
@@ -175,7 +175,7 @@ async def async_get_pankou(session, symbol, data_path=None):
             "-".join((symbol, "pankou", ref_dt.strftime("%Y%m%d%H%M%S"))) + ".json"
         )
         data_file = data_path / data_fname
-        with data_file.open("w") as dataf:
+        with data_file.open("w", encoding="utf-8") as dataf:
             json.dump(quotes, dataf, indent=4, ensure_ascii=False)
 
     return quotes
@@ -218,7 +218,7 @@ async def async_get_live_info(session, symbol, data_path=None):
             "-".join((symbol, "quotes", ref_dt.strftime("%Y%m%d%H%M%S"))) + ".json"
         )
         data_file = data_path / data_fname
-        with data_file.open("w") as dataf:
+        with data_file.open("w", encoding="utf-8") as dataf:
             json.dump(quotes, dataf, indent=4, ensure_ascii=False)
 
     return quotes

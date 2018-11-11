@@ -66,7 +66,7 @@
     import json
 
     from pathlib import Path
-    with open(Path("xxx.json")) as f:
+    with Path("xxx.json").open(encoding="utf-8") as f:
         data = json.load(f)
 """
 import os
@@ -237,7 +237,7 @@ async def async_get_announcements(
     symbol_data_dir = Path(data_path) / MODULE_DATA_DIR / symbol / "announcements"
     os.makedirs(symbol_data_dir, exist_ok=True)
     meta_file = symbol_data_dir / f"{symbol}_meta.json"
-    with meta_file.open("w") as dataf:
+    with meta_file.open("w", encoding="utf-8") as dataf:
         json.dump(announcements, dataf, indent=4, ensure_ascii=False)
 
     aws = []

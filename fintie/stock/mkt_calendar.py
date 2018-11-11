@@ -39,7 +39,7 @@
     import json
 
     from pathlib import Path
-    with open(Path("xxx.json")) as f:
+    with Path("xxx.json").open(encoding="utf-8") as f:
         data = json.load(f)
 """
 import os
@@ -99,7 +99,7 @@ async def async_get_market_events(session, start, end, data_path=None):
         data_file = (
             file_path / f"{start.strftime('%Y%m%d')}-{end.strftime('%Y%m%d')}.json"
         )
-        with data_file.open("w") as dataf:
+        with data_file.open("w", encoding="utf-8") as dataf:
             json.dump(datas, dataf, indent=4, ensure_ascii=False)
         logger.info("calendar data has been saved to: %s", data_file)
     return datas

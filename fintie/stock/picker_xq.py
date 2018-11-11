@@ -217,7 +217,7 @@ async def async_pick_stocks(session, filter_dict=None, data_path=None, return_df
         os.makedirs(data_path, exist_ok=True)
         data_fname = "picker" + "-" + datetime.now().strftime("%Y%m%d%H%M%S") + ".json"
         data_file = data_path / data_fname
-        with data_file.open("w") as dataf:
+        with data_file.open("w", encoding="utf-8") as dataf:
             json.dump(stock_list, dataf, indent=4, ensure_ascii=False)
 
     if not return_df:
