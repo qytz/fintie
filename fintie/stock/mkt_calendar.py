@@ -53,7 +53,6 @@ import click
 import aiohttp
 
 from .cli import stock_cli_group, MODULE_DATA_DIR
-from ..config import get_config
 from ..utils import iter_dt, parse_dt, fetch_http_data, add_doc
 
 
@@ -113,7 +112,6 @@ def get_market_events(*args, **kwargs):
     return ret
 
 
-@stock_cli_group.command("cale")
 @click.option(
     "-st", "--start", default=str(date.today() - timedelta(days=30)), show_default=True
 )
@@ -121,15 +119,17 @@ def get_market_events(*args, **kwargs):
 @click.option(
     "-f",
     "--save-path",
-    type=click.Path(exists=False),
-    default=get_config("data_path", os.getcwd()),
-    show_default=True,
+    type=click.Path(exists=False)
 )
 @click.option("-p/-np", "--print/--no-print", "show", default=True)
-def market_events_cli(start, end, save_path, show):
+@stock_cli_group.command("cale")
+@click.pass_context
+def market_events_cli(ctx, start, end, save_path, show):
     """从cninfo获取日历事件"""
     start_dt = parse_dt(start)
     end_dt = parse_dt(end)
+    if not save_path:
+        save_path = ctx.obj["data_path"]
     data = get_market_events(start_dt, end_dt, save_path)
     if show:
         click.echo(json.dumps(data, indent=2, ensure_ascii=False))

@@ -15,6 +15,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """数据模块命令行"""
+import click
+
 from fintie.cli import cli
 
 
@@ -22,7 +24,8 @@ MODULE_DATA_DIR = "stock"
 
 
 @cli.group("stock")
-def stock_cli_group():
+@click.pass_context
+def stock_cli_group(ctx):
     """股票相关的数据"""
     pass
 

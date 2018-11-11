@@ -84,7 +84,6 @@ import click
 import pandas as pd
 
 from .cli import stock_cli_group, MODULE_DATA_DIR
-from ..config import get_config
 from ..env import _init_in_session
 from ..utils import fetch_http_data, add_doc
 
@@ -240,22 +239,24 @@ def pick_stocks(*args, **kwargs):
     return ret
 
 
-@stock_cli_group.command("picker-xq")
 @click.option(
     "-f",
     "--save-path",
-    type=click.Path(exists=False),
-    default=get_config("data_path", os.getcwd()),
-    show_default=True,
+    type=click.Path(exists=False)
 )
 @click.option("-p/-np", "--print/--no-print", "show", default=True)
 @click.argument("fields", nargs=-1)
-def pick_stocks_cli(save_path, show, fields):
+@stock_cli_group.command("picker-xq")
+@click.pass_context
+def pick_stocks_cli(ctx, save_path, show, fields):
     """雪球选股器
 
     fields 选股筛选条件，具体支持的字段见API文档描述，
     格式为 field=val, 多个字段空格分割: areacode=CN110000 exchange=SH ...
     """
+    if not save_path:
+        save_path = ctx.obj["data_path"]
+
     kwargs = {}
     for field in fields:
         try:
@@ -264,7 +265,6 @@ def pick_stocks_cli(save_path, show, fields):
             click.echo(f"{field} invalid skipped")
             continue
         kwargs[key] = val
-    print(kwargs)
     data = pick_stocks(kwargs, save_path)
     if show:
         click.echo(data)

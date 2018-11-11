@@ -64,7 +64,6 @@ import pandas as pd
 
 from .cli import stock_cli_group, MODULE_DATA_DIR
 from ..env import _init_in_session
-from ..config import get_config
 from ..utils import parse_dt, fetch_http_data, add_doc
 
 
@@ -170,7 +169,6 @@ def get_hist_quotes(*args, **kwargs):
     return ret
 
 
-@stock_cli_group.command("hist-quotes")
 @click.option("-s", "--symbol", required=True)
 @click.option(
     "-ed", "--end-dt", default=str(datetime.now()), show_default=True, help="行情截止时间"
@@ -195,16 +193,18 @@ def get_hist_quotes(*args, **kwargs):
 @click.option(
     "-f",
     "--save-path",
-    type=click.Path(exists=False),
-    show_default=True,
-    default=get_config("data_path", os.getcwd()),
+    type=click.Path(exists=False)
 )
 @click.option("-p/-np", "--print/--no-print", "show", default=True)
-def hist_quotes_cli(symbol, end_dt, count, freq, fq_type, save_path, show):
+@stock_cli_group.command("hist-quotes")
+@click.pass_context
+def hist_quotes_cli(ctx, symbol, end_dt, count, freq, fq_type, save_path, show):
     """从雪球获取历史行情数据
 
     day 以下的 freq 会有条数和时间限制，只能获取最近的数据
     """
+    if not save_path:
+        save_path = ctx.obj["data_path"]
     end_dt = parse_dt(end_dt)
     data = get_hist_quotes(symbol, end_dt, -count, freq, fq_type, save_path)
     if show:

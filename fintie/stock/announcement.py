@@ -81,7 +81,6 @@ import click
 import aiohttp
 
 from .cli import stock_cli_group, MODULE_DATA_DIR
-from ..config import get_config
 from ..utils import parse_dt, fetch_http_data, add_doc
 
 
@@ -278,7 +277,6 @@ def get_announcements(*args, **kwargs):
     return ret
 
 
-@stock_cli_group.command("announce", short_help="获取公告原文")
 @click.option("-s", "--symbol", type=str, required=True)
 @click.option(
     "-st",
@@ -295,10 +293,11 @@ def get_announcements(*args, **kwargs):
     "-f",
     "--file-path",
     "save_path",
-    type=click.Path(exists=False),
-    default=get_config("data_path", os.getcwd()),
+    type=click.Path(exists=False)
 )
-def announcements_cli(symbol, start, end, save_path, category, search):
+@stock_cli_group.command("announce", short_help="获取公告原文")
+@click.pass_context
+def announcements_cli(ctx, symbol, start, end, save_path, category, search):
     """从cninfo获取公告原文
 
     symbol: 使用雪球网的代码格式
@@ -335,6 +334,8 @@ def announcements_cli(symbol, start, end, save_path, category, search):
     start_dt = parse_dt(start, return_date=True)
     end_dt = parse_dt(end, return_date=True)
 
+    if not save_path:
+        save_path = ctx.obj["data_path"]
     data = get_announcements(
         symbol, category.split(","), save_path, start_dt, end_dt, search_key=""
     )

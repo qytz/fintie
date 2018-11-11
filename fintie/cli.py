@@ -15,11 +15,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """数据模块命令行"""
+import os
 import logging
 
 import click
 
-from .config import load_config, set_config, def_config_path
+from .config import load_config, set_config, get_config, def_config_path
+
+
+class Env(object):
+    """Global context object"""
+    pass
 
 
 @click.group()
@@ -33,7 +39,8 @@ from .config import load_config, set_config, def_config_path
     show_default=True,
 )
 @click.option("-d", "--data-path", type=click.Path(), help="数据存储路径，会覆盖 conf 文件里的设置")
-def cli(verbose, conf, data_path):
+@click.pass_context
+def cli(ctx, verbose, conf, data_path):
     """Console script for fintie
 
     Copyright (C) 2017-present qytz <hhhhhf@foxmail.com>
@@ -73,6 +80,11 @@ def cli(verbose, conf, data_path):
 
     if data_path:
         set_config("data_path", data_path)
+    else:
+        data_path = get_config("data_path", os.path.join(os.getcwd(), "fintie_data"))
+    ctx.ensure_object(dict)
+    ctx.obj["data_path"] = data_path
+    click.echo(f"下载的数据将会保存到 {data_path}")
 
 
 if __name__ == "__main__":

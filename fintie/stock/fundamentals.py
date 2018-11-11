@@ -40,7 +40,6 @@ import aiohttp
 import pandas as pd
 
 from .cli import stock_cli_group, MODULE_DATA_DIR
-from ..config import get_config
 from ..utils import fetch_http_data, add_doc
 
 
@@ -144,17 +143,18 @@ def get_fundamentals(*args, **kwargs):
     return ret
 
 
-@stock_cli_group.command("funda")
 @click.option(
     "-f",
     "--save-path",
-    type=click.Path(exists=False),
-    default=get_config("data_path", os.getcwd()),
-    show_default=True,
+    type=click.Path(exists=False)
 )
 @click.argument("symbols", nargs=-1, required=True)
-def fundamental_cli(symbols, save_path):
+@stock_cli_group.command("funda")
+@click.pass_context
+def fundamental_cli(ctx, symbols, save_path):
     """从163获取财务报表及财务指标信息"""
+    if not save_path:
+        save_path = ctx.obj["data_path"]
     get_fundamentals(symbols, save_path)
 
 

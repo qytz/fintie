@@ -200,17 +200,16 @@ def get_list_quotes(*args, **kwargs):
     return ret
 
 
-@stock_cli_group.command("list-quotes")
 @click.option("-t", "--data-type", default="stock", show_default=True)
 @click.option(
     "-f",
     "--save-path",
-    type=click.Path(exists=False),
-    default=get_config("data_path", os.getcwd()),
-    show_default=True,
+    type=click.Path(exists=False)
 )
 @click.option("-p/-np", "--print/--no-print", "show", default=True)
-def list_quotes_cli(data_type, save_path, show):
+@stock_cli_group.command("list-quotes")
+@click.pass_context
+def list_quotes_cli(ctx, data_type, save_path, show):
     """从雪球获取最新的行情快照
 
     对于交易时间，可以获取实时的数据；
@@ -223,6 +222,8 @@ def list_quotes_cli(data_type, save_path, show):
         eft: ETF基金
         fenji: 分级基金
     """
+    if not save_path:
+        save_path = ctx.obj["data_path"]
     data = get_list_quotes(data_type, save_path)
     if show:
         click.echo(data)

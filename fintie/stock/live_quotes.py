@@ -64,7 +64,6 @@ import click
 import pandas as pd
 
 from .cli import stock_cli_group, MODULE_DATA_DIR
-from ..config import get_config
 from ..env import _init_in_session
 from ..utils import fetch_http_data, add_doc
 
@@ -248,7 +247,6 @@ def get_live_info(*args, **kwargs):
     return ret
 
 
-@stock_cli_group.command("live-quotes")
 @click.option("-s", "--symbol", required=True)
 @click.option(
     "-t", "--type", "quotes_type", type=click.Choice(QUOTE_TYPES), default="pankou"
@@ -256,12 +254,12 @@ def get_live_info(*args, **kwargs):
 @click.option(
     "-f",
     "--save-path",
-    type=click.Path(exists=False),
-    show_default=True,
-    default=get_config("data_path", os.getcwd()),
+    type=click.Path(exists=False)
 )
 @click.option("-p/-np", "--print/--no-print", "show", default=True)
-def live_quotes_cli(symbol, quotes_type, save_path, show):
+@stock_cli_group.command("live-quotes")
+@click.pass_context
+def live_quotes_cli(ctx, symbol, quotes_type, save_path, show):
     """从雪球获取实时行情"""
     if quotes_type == "trades":
         data = get_trade_info(symbol, save_path)
@@ -270,7 +268,11 @@ def live_quotes_cli(symbol, quotes_type, save_path, show):
     elif quotes_type == "pankou":
         data = get_pankou(symbol, save_path)
     else:
-        data = None
+        click.echo("quote_type invalid: %s", quotes_type)
+        return -1
+
+    if not save_path:
+        save_path = ctx.obj["data_path"]
 
     if show:
         if isinstance(data, (list, dict)):

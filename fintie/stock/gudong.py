@@ -54,7 +54,6 @@ import click
 import pandas as pd
 
 from .cli import stock_cli_group, MODULE_DATA_DIR
-from ..config import get_config
 from ..env import _init_in_session
 from ..utils import fetch_http_data, add_doc
 
@@ -177,7 +176,6 @@ def get_gudong_count(*args, **kwargs):
     return ret
 
 
-@stock_cli_group.command("gudong")
 @click.option("-s", "--symbol", required=True)
 @click.option(
     "-t",
@@ -191,13 +189,15 @@ def get_gudong_count(*args, **kwargs):
 @click.option(
     "-f",
     "--save-path",
-    type=click.Path(exists=False),
-    default=get_config("data_path", os.getcwd()),
-    show_default=True,
+    type=click.Path(exists=False)
 )
 @click.option("-p/-np", "--print/--no-print", "show", default=False)
-def gudong_cli(symbol, gd_type, save_path, show):
+@stock_cli_group.command("gudong")
+@click.pass_context
+def gudong_cli(ctx, symbol, gd_type, save_path, show):
     """从雪球获取股东数据"""
+    if not save_path:
+        save_path = ctx.obj["data_path"]
     data = get_gudong(symbol, gd_type, save_path)
     if show:
         click.echo(data)
