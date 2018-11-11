@@ -16,7 +16,7 @@
 # limitations under the License.
 
 __title__ = 'fintie'
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 __description__ = 'a common data obtain tool'
 __author__ = 'qytz'
 __author_email__ = 'hhhhhf@foxmail.com'
