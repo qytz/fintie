@@ -12,7 +12,7 @@ Click==7.0
 decorator==4.3.0
 docutils==0.14
 entrypoints==0.2.3
-idna==2.7
+idna==2.8
 imagesize==1.1.0
 ipykernel==5.1.0
 ipython==7.1.1
