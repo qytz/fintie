@@ -53,7 +53,7 @@ Sphinx==1.8.1
 sphinxcontrib-websupport==1.1.0
 SQLAlchemy==1.2.12
 testpath==0.4.2
-tornado==5.1.1
+tornado==6.0.3
 traitlets==4.3.2
 urllib3==1.24
 wcwidth==0.1.7
