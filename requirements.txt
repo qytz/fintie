@@ -43,7 +43,7 @@ py==1.7.0
 Pygments==2.2.0
 pyparsing==2.2.2
 pytest==3.9.3
-python-dateutil==2.7.5
+python-dateutil==2.8.0
 pytz==2018.7
 pyzmq==17.1.2
 requests==2.20.0
