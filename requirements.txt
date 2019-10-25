@@ -48,7 +48,7 @@ pytz==2018.7
 pyzmq==17.1.2
 requests==2.20.0
 six==1.11.0
-snowballstemmer==1.2.1
+snowballstemmer==2.0.0
 Sphinx==1.8.1
 sphinxcontrib-websupport==1.1.0
 SQLAlchemy==1.2.12
