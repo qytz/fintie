@@ -11,7 +11,7 @@ chardet==3.0.4
 Click==7.0
 decorator==4.3.0
 docutils==0.14
-entrypoints==0.2.3
+entrypoints==0.3
 idna==2.7
 imagesize==1.1.0
 ipykernel==5.1.0
