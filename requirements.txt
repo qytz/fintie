@@ -30,7 +30,7 @@ nbconvert==5.6.1
 nbformat==4.4.0
 nbsphinx==0.4.3
 numpy==1.17.3
-packaging==18.0
+packaging==19.2
 pandas==0.25.2
 pandocfilters==1.4.2
 parso==0.5.1
