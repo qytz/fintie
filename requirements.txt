@@ -2,7 +2,7 @@ aiohttp==3.4.4
 alabaster==0.7.12
 async-timeout==3.0.1
 atomicwrites==1.2.1
-attrs==18.2.0
+attrs==19.3.0
 Babel==2.7.0
 backcall==0.1.0
 bleach==3.0.2
