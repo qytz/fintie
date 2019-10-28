@@ -42,7 +42,7 @@ ptyprocess==0.6.0
 py==1.7.0
 Pygments==2.2.0
 pyparsing==2.2.2
-pytest==3.9.3
+pytest==5.2.2
 python-dateutil==2.7.5
 pytz==2019.3
 pyzmq==17.1.2
