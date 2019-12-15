@@ -33,7 +33,7 @@ numpy==1.17.4
 packaging==19.2
 pandas==0.25.3
 pandocfilters==1.4.2
-parso==0.5.1
+parso==0.5.2
 pexpect==4.7.0
 pickleshare==0.7.5
 prompt-toolkit==3.0.0
