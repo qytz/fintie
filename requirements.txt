@@ -36,7 +36,7 @@ pandocfilters==1.4.2
 parso==0.5.2
 pexpect==4.7.0
 pickleshare==0.7.5
-prompt-toolkit==3.0.2
+prompt-toolkit==3.0.4
 pluggy==0.13.1
 ptyprocess==0.6.0
 py==1.8.1
