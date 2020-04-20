@@ -29,7 +29,7 @@ multidict==4.7.4
 nbconvert==5.6.1
 nbformat==5.0.3
 nbsphinx==0.5.0
-numpy==1.18.1
+numpy==1.18.3
 packaging==20.0
 pandas==0.25.3
 pandocfilters==1.4.2
