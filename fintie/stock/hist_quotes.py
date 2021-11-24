@@ -108,7 +108,7 @@ async def async_get_hist_quotes(
     小于 day 频率的数据，会有时间限制，只能取最近的数据，请谨慎使用
 
     :param session: `aiohttp.ClientSession` 对象，同步接口不需要传
-    :param symbol: 股票代码
+    :param symbol: 股票代码，如 SZ002353
     :param ref_dt: 行情数据参考日期，count 传负是截止日期，传正为开始日期
     :param count: 要取的行情数据的条数
     :param freq: 数据频率：1m/5m/15m/30m/60m/120m/day/week/month/quarter/year
@@ -122,7 +122,7 @@ async def async_get_hist_quotes(
     await _init(session)
     url = "https://stock.xueqiu.com/v5/stock/chart/kline.json"
     params = {
-        "symbol": "SZ002353",
+        "symbol": symbol,
         "begin": int(ref_dt.timestamp()) * 1000,
         "period": freq,
         "type": fq_type,
